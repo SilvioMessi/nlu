@@ -46,7 +46,8 @@ class EntityRecognizer():
                                 if index + 1 not in position:
                                     entities_positions[position_index]['end'] = text_length + len(token)
                                     position_index += 1
-                            text_length += len(token)
+                            # space between tokens
+                            text_length += len(token) + 1
         # remove duplicate
-        finale_entities_positions = [dict(t) for t in set([tuple(d.items()) for d in entities_positions])]
-        return sentence_tokens, finale_entities_positions
+        final_entities_positions = [dict(t) for t in set([tuple(d.items()) for d in entities_positions])]
+        return sentence_tokens, final_entities_positions
