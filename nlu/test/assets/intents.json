@@ -1,0 +1,358 @@
+[
+  {
+    "description": "Order a pizza",
+    "id": "order_a_pizza",
+    "entries": [
+      {
+        "value": [
+          {
+            "text": "can i have a pizza "
+          },
+          {
+            "text": "margherita",
+            "entity": "pizza_type",
+            "name": "pizza_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": " ?"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "a pizza "
+          },
+          {
+            "text": "margherita",
+            "entity": "pizza_type",
+            "name": "pizza_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": ", please !"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "two",
+            "entity": "number",
+            "name": "number_1",
+            "prebuilt": true
+          },
+          {
+            "text": " "
+          },
+          {
+            "text": "margherita",
+            "entity": "pizza_type",
+            "name": "pizza_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": " please!"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "I want order "
+          },
+          {
+            "text": "four",
+            "entity": "number",
+            "name": "number_1",
+            "prebuilt": true
+          },
+          {
+            "text": " pizzas "
+          },
+          {
+            "text": "cheese",
+            "entity": "pizza_type",
+            "name": "pizza_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": " and "
+          },
+          {
+            "text": "two",
+            "entity": "number",
+            "name": "number_2",
+            "prebuilt": true
+          },
+          {
+            "text": " pizzas "
+          },
+          {
+            "text": "sicilian",
+            "entity": "pizza_type",
+            "name": "pizza_type_2",
+            "prebuilt": false
+          },
+          {
+            "text": "!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "description": "Order a drink",
+    "id": "order_a_drink",
+    "entries": [
+      {
+        "value": [
+          {
+            "text": "can i have a can of "
+          },
+          {
+            "text": "coke",
+            "entity": "drink_type",
+            "name": "drink_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": " ?"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "a can of "
+          },
+          {
+            "text": "coke",
+            "entity": "drink_type",
+            "name": "drink_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": ", please !"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "can i have "
+          },
+          {
+            "text": "five",
+            "entity": "number",
+            "name": "number_1",
+            "prebuilt": true
+          },
+          {
+            "text": " cans of "
+          },
+          {
+            "text": "coke",
+            "entity": "drink_type",
+            "name": "drink_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": " ?"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "I'll have a pint of "
+          },
+          {
+            "text": "beer",
+            "entity": "drink_type",
+            "name": "drink_type_1",
+            "prebuilt": false
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "I'll have a glass of "
+          },
+          {
+            "text": "red wine",
+            "entity": "drink_type",
+            "name": "drink_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": "."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "description": "Book a restaurant",
+    "id": "book_restaurant",
+    "entries": [
+      {
+        "value": [
+          {
+            "text": "Book a resturant for "
+          },
+          {
+            "text": "4",
+            "entity": "number",
+            "name": "number_1",
+            "prebuilt": true
+          },
+          {
+            "text": " people for "
+          },
+          {
+            "text": " tomorrow tonight",
+            "entity": "datetime",
+            "name": "datetime_1",
+            "prebuilt": true
+          },
+          {
+            "text": " ."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "description": "Get weather forecast",
+    "id": "get_weather_forecast",
+    "entries": [
+      {
+        "value": [
+          {
+            "text": "Whats the weather like in "
+          },
+          {
+            "text": "Bergamo",
+            "entity": "location",
+            "name": "location_1",
+            "prebuilt": true
+          },
+          {
+            "text": " ?"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "I want the weather in "
+          },
+          {
+            "text": "Rome",
+            "entity": "location",
+            "name": "location_1",
+            "prebuilt": true
+          },
+          {
+            "text": " ?"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "I want the weather in "
+          },
+          {
+            "text": "Rome",
+            "entity": "location",
+            "name": "location_1",
+            "prebuilt": true
+          },
+          {
+            "text": " ?"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "What will the weather be like in "
+          },
+          {
+            "text": "Milan",
+            "entity": "location",
+            "name": "location_1",
+            "prebuilt": true
+          },
+          {
+            "text": " "
+          },
+          {
+            "text": "next week",
+            "entity": "datetime",
+            "name": "datetime_1",
+            "prebuilt": true
+          },
+          {
+            "text": "?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "description": "Buy goods",
+    "id": "buy_goods",
+    "entries": [
+      {
+        "value": [
+          {
+            "text": "how much is it?"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "how much this "
+          },
+          {
+            "text": "hard disk",
+            "entity": "goods_type",
+            "name": "goods_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": "?"
+          }
+        ]
+      },
+      {
+        "value": [
+          {
+            "text": "i need a "
+          },
+          {
+            "text": "PC",
+            "entity": "goods_type",
+            "name": "goods_type_1",
+            "prebuilt": false
+          },
+          {
+            "text": " that cost less than "
+          },
+          {
+            "text": "500$",
+            "entity": "money",
+            "name": "money_1",
+            "prebuilt": true
+          }
+        ]
+      }
+    ]
+  }
+]
