@@ -8,9 +8,22 @@ class SentencesSimilarity():
         self.nlp_obj = nlp_obj
 
     def get_sentences_similarity(self, sentence_1=None, sentence_2=None):
-        sentence_1_word_tokens, sentence_1_number_tokens = self.sentence_preprocessing(sentence_1)
-        sentence_2_word_tokens, sentence_2_number_tokens = self.sentence_preprocessing(sentence_2)
-        
+        sentence_1_word_tokens, sentence_1_number_tokens, dependencies_graph_sentence_1 = self.data_preprocessing(sentence_1)
+        sentence_2_word_tokens, sentence_2_number_tokens, dependencies_graph_sentence_2 = self.data_preprocessing(sentence_2)
+        return self.compute_similarity(sentence_1_word_tokens,
+                                       sentence_1_number_tokens,
+                                       sentence_2_word_tokens,
+                                       sentence_2_number_tokens,
+                                       dependencies_graph_sentence_1,
+                                       dependencies_graph_sentence_2)
+    
+    def compute_similarity(self, 
+                           sentence_1_word_tokens=[],
+                           sentence_1_number_tokens=[],
+                           sentence_2_word_tokens=[],
+                           sentence_2_number_tokens=[],
+                           dependencies_graph_sentence_1=Graph(),
+                           dependencies_graph_sentence_2=Graph()):
         # lexical analysis
         # words
         num_tokens_s_1 = len(sentence_1_word_tokens)
@@ -52,8 +65,6 @@ class SentencesSimilarity():
             lexical_final_similarity = word_sim - (1 - number_sim)    
 
         # syntactic analysis
-        dependencies_graph_sentence_1 = self.nlp_obj.get_dependecies_graph(' '.join(self.nlp_obj.get_lemmas(sentence_1)[0]))[0]
-        dependencies_graph_sentence_2 = self.nlp_obj.get_dependecies_graph(' '.join(self.nlp_obj.get_lemmas(sentence_2)[0]))[0]
         sentence_1_dep_graph = self.dependencies_graph_preprocessing(dependencies_graph_sentence_1,
                                                                      sentence_1_word_tokens)
         sentence_2_dep_graph = self.dependencies_graph_preprocessing(dependencies_graph_sentence_2,
@@ -87,6 +98,12 @@ class SentencesSimilarity():
         sentences_similarity = sentences_similarity / (tot_num_words + tot_num_rdf_triple)
         return  sentences_similarity
         
+    def data_preprocessing(self, sentence):
+        preprocessed_data = {}
+        preprocessed_data ['word_tokens'], preprocessed_data ['number_tokens'] = self.sentence_preprocessing(sentence)
+        preprocessed_data ['dependencies_graph'] = self.nlp_obj.get_dependecies_graph(' '.join(self.nlp_obj.get_lemmas(sentence)[0]))[0]
+        return preprocessed_data ['word_tokens'], preprocessed_data ['word_tokens'], preprocessed_data ['dependencies_graph']
+    
     def sentence_preprocessing(self, sentence):
         word_tokens = []
         number_tokens = []
@@ -109,12 +126,10 @@ class SentencesSimilarity():
         for triple in dependencies_graph:
             triple_valid = True
             s, o, p = triple
-#             lemmas_subject = self.nlp_obj.get_lemmas(s)[0]
-#             lemmas_predicate = self.nlp_obj.get_lemmas(p)[0]
-#             print (lemmas_subject)
-#             assert len(lemmas_subject) == 1
-#             print (lemmas_predicate)
-#             assert len(lemmas_predicate) == 1
+            # lemmas_subject = self.nlp_obj.get_lemmas(s)[0]
+            # lemmas_predicate = self.nlp_obj.get_lemmas(p)[0]
+            # assert len(lemmas_subject) == 1
+            # assert len(lemmas_predicate) == 1
             if s.value not in lexical_layer_tokes:
                 triple_valid = False
             if p.value  not in lexical_layer_tokes:

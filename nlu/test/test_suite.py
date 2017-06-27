@@ -1,6 +1,7 @@
 import os
 import unittest
 import json
+from time import time
 
 from nlu.nlp import StanfordCoreNLP
 from nlu.words_similarity import PathMeasureWordsSimilarity
@@ -119,8 +120,30 @@ class TestSuite(unittest.TestCase):
         for sentence in sentences :
             sentence_tagged = self.entity_recognizer.tag_sentence(self.entities, sentence)
             print (sentence_tagged)
-            print (self.intent_recognizer.get_intents_probabilities(self.intents_tagged, sentence))
-            print (self.intent_recognizer.get_intents_probabilities(self.intents_tagged, sentence_tagged))
-
+            print (self.intent_recognizer.get_intents_probabilities_raw_data(self.intents_tagged, sentence))
+            print (self.intent_recognizer.get_intents_probabilities_raw_data(self.intents_tagged, sentence_tagged))
+            
+    def test_cache(self):
+        sentence = 'Can i have a pizza margherita, a pizza napoletan, two beer and a can of coca cola?'       
+        preprocessed_sentence = {}
+        preprocessed_sentence ['word_tokens'], preprocessed_sentence ['number_tokens'], preprocessed_sentence ['dependencies_graph'] = self.intent_recognizer.data_preprocessing(sentence)
+        preprocessed_intents = {}
+        for intent_id in self.intents_tagged:
+            preprocessed_intents[intent_id] = []
+            for example in self.intents_tagged[intent_id]:
+                preprocessed_data = {}
+                preprocessed_data ['word_tokens'], preprocessed_data ['number_tokens'] , preprocessed_data ['dependencies_graph'] = self.intent_recognizer.data_preprocessing(example)
+                preprocessed_intents[intent_id].append(preprocessed_data)
+        
+        start = time()
+        self.intent_recognizer.get_intents_probabilities_raw_data(self.intents_tagged, sentence)
+        elapsed = time() - start
+        print ('execution time without cache %d' % elapsed)
+        
+        start = time()
+        self.intent_recognizer.get_intents_probabilities_preprocessed_data(preprocessed_intents, preprocessed_sentence)
+        elapsed = time() - start
+        print ('execution time using cache %d' % elapsed)
+        
 if __name__ == "__main__":
     unittest.main()
