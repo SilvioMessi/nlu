@@ -43,7 +43,7 @@ class Benchmark():
             for intent_id in intents:
                 scores = []
                 for example in intents [intent_id]:
-                    sentences_similarity = self.sentences_similarity.get_sentences_similarity(example, query, False)
+                    sentences_similarity = self.sentences_similarity.get_sentences_similarity(example, query)
                     csv_writer.writerow([intent_id, example, query, sentences_similarity])
                     scores.append(sentences_similarity)
                 csv_writer.writerow([intent_id, '', 'MEAN', sum(scores) / len(scores)])

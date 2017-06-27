@@ -90,17 +90,17 @@ class TestSuite(unittest.TestCase):
     
     def test_seeker_simple(self):
         sentence = 'Can i have two pizzas margherita and a can of beer?'
-        print(self.seeker.search_free_text('margherita', sentence, print_logs=True))
-        print(self.seeker.search_free_text('beer', sentence, print_logs=True))
-        print(self.seeker.search_free_text('beers', sentence, print_logs=True))
-        print(self.seeker.search_free_text('2', sentence, print_logs=True))
-        print(self.seeker.search_free_text('coca cola', sentence, print_logs=True))
+        print(self.seeker.search_free_text('margherita', sentence))
+        print(self.seeker.search_free_text('beer', sentence))
+        print(self.seeker.search_free_text('beers', sentence))
+        print(self.seeker.search_free_text('2', sentence))
+        print(self.seeker.search_free_text('coca cola', sentence))
         sentence = 'Two cans of coke, tree beers, five pizzas margherita and more coca cola!'
-        print(self.seeker.search_free_text('margherita', sentence, print_logs=True))
-        print(self.seeker.search_free_text('beer', sentence, print_logs=True))
-        print(self.seeker.search_free_text('beers', sentence, print_logs=True))
-        print(self.seeker.search_free_text('2', sentence, print_logs=True))
-        print(self.seeker.search_free_text('coca cola', sentence, print_logs=True))
+        print(self.seeker.search_free_text('margherita', sentence))
+        print(self.seeker.search_free_text('beer', sentence))
+        print(self.seeker.search_free_text('beers', sentence))
+        print(self.seeker.search_free_text('2', sentence))
+        print(self.seeker.search_free_text('coca cola', sentence))
     
     def test_benchmark(self):
         self.benchmark.seek_entity_benchmark(self.entities, 'Can i have a pizza margherita, a pizza napoletan, two beer and a can of coca cola?', 'entities_benchmark')

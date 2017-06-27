@@ -1,7 +1,4 @@
-import sys, os
 import numpy as np
-
-from nlu.utils import print_matrix
 
 class Seeker():
     
@@ -9,10 +6,7 @@ class Seeker():
         self.words_similarity_obj = words_similarity_obj
         self.nlp_obj = nlp_obj
 
-    def search_free_text(self, free_text=None, sentence=None, print_logs=False):
-        # disable printing on console
-        if print_logs is False:
-            sys.stdout = open(os.devnull, 'w')
+    def search_free_text(self, free_text=None, sentence=None):
         # position (tokens index) of all occurrence found
         free_text_positions = []
         
@@ -28,7 +22,6 @@ class Seeker():
                 for index_row , lemma_1 in enumerate(text_lemmas):
                     for index_column, lemma_2 in enumerate(sentence_lemmas):
                         matrix[index_row, index_column] = self.words_similarity_obj.get_words_similarity(lemma_1, lemma_2)
-                print_matrix(matrix, text_lemmas, sentence_lemmas)
                 occurrence = self.matrix_similarity(matrix)
                 if len(occurrence) > 0:
                     free_text_positions.append(occurrence)
@@ -38,10 +31,7 @@ class Seeker():
                 else:
                     search = False
             else:
-                search = False       
-        # enable printing on console
-        if print_logs is False:
-            sys.stdout = sys.__stdout__
+                search = False
         return  sentence_tokens, free_text_positions
         
     def preprocessing(self, sentence):
