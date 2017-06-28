@@ -25,27 +25,37 @@ class TestSuite(unittest.TestCase):
         self.test_folder_path = os.path.dirname(os.path.abspath(__file__))
         # entities data store
         self.entities = {}
+        self.preprocessed_entities = {} 
         with open(self.test_folder_path + '/assets/entities.json') as json_file:    
             json_obj = json.load(json_file)
             for entity in json_obj:
                 entity_id = entity['id']
                 self.entities[entity_id] = {}
+                self.preprocessed_entities[entity_id] = {}
                 for entry in entity['entries']:
                     value_id = entry['value']
                     self.entities[entity_id][value_id] = [value_id]
+                    preprocessed_data = {}
+                    preprocessed_data['tokens'], preprocessed_data['lemmas'] = self.seeker.data_preprocessing(value_id)
+                    self.preprocessed_entities[entity_id][value_id] = [preprocessed_data]
                     for synonymous in entry['synonyms']:
                         self.entities[entity_id][value_id].append(synonymous)
+                        preprocessed_data = {}
+                        preprocessed_data['tokens'], preprocessed_data['lemmas'] = self.seeker.data_preprocessing(synonymous)
+                        self.preprocessed_entities[entity_id][value_id] = [preprocessed_data]
         
         # intents data store
         self.intents_raw = {}
         self.intents_raw_big = {}
         self.intents_tagged = {}
+        self.preprocessed_intents = {}
         with open(self.test_folder_path + '/assets/intents.json') as json_file:    
             json_obj = json.load(json_file)
             for intent in json_obj:
                 intent_id = intent['id']
                 self.intents_raw[intent_id] = []
                 self.intents_tagged[intent_id] = []
+                self.preprocessed_intents[intent_id] = []
                 for entry in intent['entries']:
                     sentence_raw = ''
                     sentence_entities_tagged = ''
@@ -57,6 +67,9 @@ class TestSuite(unittest.TestCase):
                         sentence_raw += item['text']
                     self.intents_raw[intent_id].append(sentence_raw)
                     self.intents_tagged[intent_id].append(sentence_entities_tagged)
+                    preprocessed_data = {}
+                    preprocessed_data ['word_tokens'], preprocessed_data ['number_tokens'] , preprocessed_data ['dependencies_graph'] = self.intent_recognizer.data_preprocessing(sentence_raw)
+                    self.preprocessed_intents[intent_id].append(preprocessed_data)
         
         with open(self.test_folder_path + '/assets/sentences.json') as json_file:    
             json_obj = json.load(json_file)
@@ -127,13 +140,6 @@ class TestSuite(unittest.TestCase):
         sentence = 'Can i have a pizza margherita, a pizza napoletan, two beer and a can of coca cola?'       
         preprocessed_sentence = {}
         preprocessed_sentence ['word_tokens'], preprocessed_sentence ['number_tokens'], preprocessed_sentence ['dependencies_graph'] = self.intent_recognizer.data_preprocessing(sentence)
-        preprocessed_intents = {}
-        for intent_id in self.intents_tagged:
-            preprocessed_intents[intent_id] = []
-            for example in self.intents_tagged[intent_id]:
-                preprocessed_data = {}
-                preprocessed_data ['word_tokens'], preprocessed_data ['number_tokens'] , preprocessed_data ['dependencies_graph'] = self.intent_recognizer.data_preprocessing(example)
-                preprocessed_intents[intent_id].append(preprocessed_data)
         
         start = time()
         self.intent_recognizer.get_intents_probabilities(self.intents_tagged, sentence)
@@ -141,7 +147,20 @@ class TestSuite(unittest.TestCase):
         print ('execution time without cache %d' % elapsed)
         
         start = time()
-        self.intent_recognizer.get_intents_probabilities(preprocessed_intents, preprocessed_sentence, data_preprocessed=True)
+        self.intent_recognizer.get_intents_probabilities(self.preprocessed_intents, preprocessed_sentence, data_preprocessed=True)
+        elapsed = time() - start
+        print ('execution time using cache %d' % elapsed)
+        
+        preprocessed_sentence = {}
+        preprocessed_sentence ['tokens'], preprocessed_sentence ['lemmas'] = self.seeker.data_preprocessing(sentence)
+        
+        start = time()
+        self.entity_recognizer.get_entities(self.entities, sentence)
+        elapsed = time() - start
+        print ('execution time without cache %d' % elapsed)
+        
+        start = time()
+        self.entity_recognizer.get_entities(self.preprocessed_entities, preprocessed_sentence, data_preprocessed=True)
         elapsed = time() - start
         print ('execution time using cache %d' % elapsed)
         

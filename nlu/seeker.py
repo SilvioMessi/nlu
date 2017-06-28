@@ -7,12 +7,16 @@ class Seeker():
         self.nlp_obj = nlp_obj
 
     def search_free_text(self, free_text=None, sentence=None):
+        _, text_lemmas = self.data_preprocessing(free_text)
+        sentence_tokens, sentence_lemmas = self.data_preprocessing(sentence)
+        return self.search(text_lemmas, sentence_tokens, sentence_lemmas)
+    
+    def search(self,
+               text_lemmas=[],
+               sentence_tokens=[],
+               sentence_lemmas=[]):
         # position (tokens index) of all occurrence found
         free_text_positions = []
-        
-        _, text_lemmas = self.preprocessing(free_text)
-        sentence_tokens, sentence_lemmas = self.preprocessing(sentence)
-        
         search = True
         while search:
             num_lemmas_text = len(text_lemmas)
@@ -34,7 +38,7 @@ class Seeker():
                 search = False
         return  sentence_tokens, free_text_positions
         
-    def preprocessing(self, sentence):
+    def data_preprocessing(self, sentence):
         tokens = self.nlp_obj.get_tokens(sentence, remove_stop_words=False)[0]
         lemmas = self.nlp_obj.get_lemmas(' '.join(tokens))[0]
         assert len(tokens) == len(lemmas)

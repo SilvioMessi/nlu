@@ -9,11 +9,17 @@ class EntityRecognizer():
         words_similarity = PathMeasureWordsSimilarity()
         self.seeker = Seeker(words_similarity, nlp)
         
-    def tag_sentence(self, entities, sentence):
+    def data_preprocessing(self, sentence):
+        return self.seeker.data_preprocessing(sentence)
+        
+    def tag_sentence(self, entities, sentence, data_preprocessed=False):
         for entity_id in entities:
             for value_id in entities [entity_id]:
                 for example in entities [entity_id][value_id]:
-                    sentence_tokens, free_text_positions = self.seeker.search_free_text(example, sentence)
+                    if data_preprocessed:
+                        sentence_tokens, free_text_positions = self.seeker.search(example['lemmas'], sentence['tokens'], sentence['lemmas'])
+                    else:
+                        sentence_tokens, free_text_positions = self.seeker.search_free_text(example, sentence)
                     tmp = sentence_tokens
                     for position in free_text_positions:
                         first = True
@@ -28,13 +34,16 @@ class EntityRecognizer():
                     sentence = ' '.join(final_tokens)
         return sentence
     
-    def get_entities(self, entities, sentence):
+    def get_entities(self, entities, sentence, data_preprocessed=False):
         entities_positions = []
         position_index = 0
         for entity_id in entities:
             for value_id in entities [entity_id]:
                 for example in entities [entity_id][value_id]:
-                    sentence_tokens, free_text_positions = self.seeker.search_free_text(example, sentence)
+                    if data_preprocessed:
+                        sentence_tokens, free_text_positions = self.seeker.search(example['lemmas'], sentence['tokens'], sentence['lemmas'])
+                    else:
+                        sentence_tokens, free_text_positions = self.seeker.search_free_text(example, sentence)
                     text_length = 0
                     for index, token in enumerate(sentence_tokens):
                         for position in free_text_positions:
