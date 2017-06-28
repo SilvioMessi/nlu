@@ -120,8 +120,8 @@ class TestSuite(unittest.TestCase):
         for sentence in sentences :
             sentence_tagged = self.entity_recognizer.tag_sentence(self.entities, sentence)
             print (sentence_tagged)
-            print (self.intent_recognizer.get_intents_probabilities_raw_data(self.intents_tagged, sentence))
-            print (self.intent_recognizer.get_intents_probabilities_raw_data(self.intents_tagged, sentence_tagged))
+            print (self.intent_recognizer.get_intents_probabilities(self.intents_tagged, sentence))
+            print (self.intent_recognizer.get_intents_probabilities(self.intents_tagged, sentence_tagged))
             
     def test_cache(self):
         sentence = 'Can i have a pizza margherita, a pizza napoletan, two beer and a can of coca cola?'       
@@ -136,12 +136,12 @@ class TestSuite(unittest.TestCase):
                 preprocessed_intents[intent_id].append(preprocessed_data)
         
         start = time()
-        self.intent_recognizer.get_intents_probabilities_raw_data(self.intents_tagged, sentence)
+        self.intent_recognizer.get_intents_probabilities(self.intents_tagged, sentence)
         elapsed = time() - start
         print ('execution time without cache %d' % elapsed)
         
         start = time()
-        self.intent_recognizer.get_intents_probabilities_preprocessed_data(preprocessed_intents, preprocessed_sentence)
+        self.intent_recognizer.get_intents_probabilities(preprocessed_intents, preprocessed_sentence, data_preprocessed=True)
         elapsed = time() - start
         print ('execution time using cache %d' % elapsed)
         

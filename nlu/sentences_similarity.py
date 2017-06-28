@@ -17,7 +17,7 @@ class SentencesSimilarity():
                                        dependencies_graph_sentence_1,
                                        dependencies_graph_sentence_2)
     
-    def compute_similarity(self, 
+    def compute_similarity(self,
                            sentence_1_word_tokens=[],
                            sentence_1_number_tokens=[],
                            sentence_2_word_tokens=[],
@@ -102,7 +102,7 @@ class SentencesSimilarity():
         preprocessed_data = {}
         preprocessed_data ['word_tokens'], preprocessed_data ['number_tokens'] = self.sentence_preprocessing(sentence)
         preprocessed_data ['dependencies_graph'] = self.nlp_obj.get_dependecies_graph(' '.join(self.nlp_obj.get_lemmas(sentence)[0]))[0]
-        return preprocessed_data ['word_tokens'], preprocessed_data ['word_tokens'], preprocessed_data ['dependencies_graph']
+        return preprocessed_data ['word_tokens'], preprocessed_data ['number_tokens'], preprocessed_data ['dependencies_graph']
     
     def sentence_preprocessing(self, sentence):
         word_tokens = []
