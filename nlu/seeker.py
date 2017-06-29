@@ -1,4 +1,5 @@
 import numpy as np
+from copy import deepcopy
 
 class Seeker():
     
@@ -15,23 +16,26 @@ class Seeker():
                text_lemmas=[],
                sentence_tokens=[],
                sentence_lemmas=[]):
+        
+        # sentence_lemmas may change
+        sentence_lemmas_tmp = deepcopy(sentence_lemmas)
         # position (tokens index) of all occurrence found
         free_text_positions = []
         search = True
         while search:
             num_lemmas_text = len(text_lemmas)
-            num_lemmas_s = len(sentence_lemmas)
+            num_lemmas_s = len(sentence_lemmas_tmp)
             if num_lemmas_text != 0 and  num_lemmas_s != 0 :
                 matrix = np.empty([num_lemmas_text, num_lemmas_s]);
                 for index_row , lemma_1 in enumerate(text_lemmas):
-                    for index_column, lemma_2 in enumerate(sentence_lemmas):
+                    for index_column, lemma_2 in enumerate(sentence_lemmas_tmp):
                         matrix[index_row, index_column] = self.words_similarity_obj.get_words_similarity(lemma_1, lemma_2)
                 occurrence = self.matrix_similarity(matrix)
                 if len(occurrence) > 0:
                     free_text_positions.append(occurrence)
                     # replace occurrence
                     for position in occurrence:
-                        sentence_lemmas[position] = '###occurrence###'
+                        sentence_lemmas_tmp[position] = '###occurrence###'
                 else:
                     search = False
             else:
