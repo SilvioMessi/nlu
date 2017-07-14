@@ -1,5 +1,5 @@
 # NLU
-Python library for NLU (Natural Language Understanding).
+Python library for NLU (Natural Language Understanding).  
 This python library allows to identify intents and entities present in a sentence, starting from a train set of examples. 
 
 ## Installation
@@ -7,12 +7,12 @@ This python library allows to identify intents and entities present in a sentenc
 pip install git+https://github.com/SilvioMessi/nlu.git 
 ```
 ### Dependencies
-*  Stanford CoreNLP
-At the moment all the NLP (Natural Language Processing) task are made by Stanford CoreNLP library, used like external [server](https://stanfordnlp.github.io/CoreNLP/corenlp-server.html).
+*  Stanford CoreNLP  
+At the moment all the NLP (Natural Language Processing) task are made by [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/), used like external [server](https://stanfordnlp.github.io/CoreNLP/corenlp-server.html).  
 Before use NLU library make sure that an instance of CoreNLP Server is correctly running on port 9000.
-* Wordnet
-The NLU library use [Wordnet](https://wordnet.princeton.edu/). 
-Before use NLU library make sure that Wordnet corpora is correctly "intstalled" by [NTLK](http://www.nltk.org/data.html)
+* Wordnet  
+The NLU library use [Wordnet](https://wordnet.princeton.edu/).  
+Before use NLU library make sure that Wordnet corpora is correctly "intstalled" by [NTLK](http://www.nltk.org/data.html).
 
 ## Basic Usage
 ```python
